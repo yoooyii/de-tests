@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>德语课堂测验Nov</title>
+<style>
+  :root{--max:900px;--gap:12px}
+  body{font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif;line-height:1.55;margin:0;background:#fafafa;color:#222}
+  .page{max-width:var(--max);margin:24px auto;padding:24px;background:#fff;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+  h1,h2{margin:0 0 12px}
+  h1{font-size:1.6rem}
+  h2{font-size:1.2rem;padding-top:10px;border-top:1px solid #eee;margin-top:22px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 18px;color:#444;margin:6px 0 14px}
+  .tag{background:#f2f2f6;padding:4px 8px;border-radius:8px}
+  .tip{background:#fff7cc;border:1px solid #e3eb74;padding:10px;border-radius:10px;margin:10px 0;color:#6b5900}
+  ol{padding-left:22px}
+  input[type="text"], select, textarea{width:100%;padding:8px 10px;border:1px solid #cfd4dc;border-radius:8px;font-size:14px}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap)}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{border-bottom:1px solid #eee;padding:10px;text-align:left}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  button{padding:10px 14px;border-radius:10px;border:0;background:#111;color:#fff;cursor:pointer}
+  button.secondary{background:#e6e8ec;color:#111}
+  .result{margin-top:10px;font-weight:600}
+  .ok{color:#087443}
+  .bad{color:#b00020}
+  .muted{color:#666}
+  .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:0 6px}
+  .answer{font-family:ui-monospace,monospace;color:#444;background:#f7f7ff;border:1px dashed #cbd5ff;border-radius:8px;padding:8px}
+  .small{font-size:12px;color:#666}
+  .correct{outline:2px solid #34a853}
+  .wrong{outline:2px solid #ea4335}
+</style>
+</head>
+<body>
+<main class="page">
+  <h1>DE Mini‑Test 1: Guten Tag! &amp; Auf Deutsch, bitte!</h1>
+  <div class="meta">
+    <span class="tag">Zeit: 15 Minuten</span>
+    <span class="tag">Themen: Begrüßung, Vorstellung, Fragen nach Namen, Klassenzimmerwörter</span>
+  </div>
+
+  <h2>Aufgabe 1 – Vokabeltest（词汇测试）</h2>
+  <div class="tip">请写出下列词语的中文意思（标点不做严格要求）。</div>
+  <ol id="t1">
+    <li>Guten Tag! = <input data-key="t1_1" type="text" placeholder="答案"/></li>
+    <li>Wie heißt du? = <input data-key="t1_2" type="text" placeholder="答案"/></li>
+    <li>der Name = <input data-key="t1_3" type="text" placeholder="答案"/></li>
+    <li>Ich heiße Anna. = <input data-key="t1_4" type="text" placeholder="答案"/></li>
+    <li>das Buch = <input data-key="t1_5" type="text" placeholder="答案"/></li>
+    <li>Danke! = <input data-key="t1_6" type="text" placeholder="答案"/></li>
+    <li>Auf Deutsch = <input data-key="t1_7" type="text" placeholder="答案"/></li>
+    <li>Wie bitte? = <input data-key="t1_8" type="text" placeholder="答案"/></li>
+    <li>der Herr = <input data-key="t1_9" type="text" placeholder="答案"/></li>
+    <li>die Lampe = <input data-key="t1_10" type="text" placeholder="答案"/></li>
+  </ol>
+
+  <h2>Aufgabe 2 – Lückentext（完形填空）</h2>
+  <div class="tip">从下列词中选择或填写：<span class="kbd">Das</span>、<span class="kbd">Wer</span>、<span class="kbd">heißt</span>、<span class="kbd">heiße</span>、<span class="kbd">Tag</span>、<span class="kbd">danke</span>、<span class="kbd">bitte</span>、<span class="kbd">Name</span>、<span class="kbd">das</span>。</div>
+
+  <div id="t2" class="grid2">
+    <div>
+      <p><strong>(1)</strong><br>
+      A: Guten <input data-key="t2_1a" type="text" class="in" style="max-width:90px">! Mein <input data-key="t2_1b" type="text" class="in" style="max-width:110px"> ist Hans Mai.<br>
+      B: Guten Tag, Herr Mai! Ich <input data-key="t2_1c" type="text" class="in" style="max-width:110px"> Anna Kant.</p>
+    </div>
+    <div>
+      <p><strong>(2)</strong><br>
+      A: <input data-key="t2_2a" type="text" class="in" style="max-width:120px"> ist das?<br>
+      B: <input data-key="t2_2b" type="text" class="in" style="max-width:120px"> ist Frau Gabi Kittmann.</p>
+    </div>
+    <div>
+      <p><strong>(3)</strong><br>
+      A: Wie <input data-key="t2_3a" type="text" class="in" style="max-width:110px"> das auf Deutsch?<br>
+      B: <input data-key="t2_3b" type="text" class="in" style="max-width:110px"> heißt Heft.</p>
+    </div>
+    <div>
+      <p><strong>(4)</strong><br>
+      A: Wie <input data-key="t2_4a" type="text" class="in" style="max-width:110px">?<br>
+      B: Buch.<br>
+      A: Ah, <input data-key="t2_4b" type="text" class="in" style="max-width:110px"> schön!</p>
+    </div>
+  </div>
+
+  <h2>Aufgabe 3 – Zuordnen（匹配题）</h2>
+  <div class="tip">请选择每个名字对应的编号（1 Kittmann，2 Mai，3 Kant，4 Kuhn）。</div>
+  <table id="t3">
+    <thead><tr><th>Vorname（字母）</th><th>Familienname（数字）</th></tr></thead>
+    <tbody>
+      <tr><td>a) Hans</td><td>
+        <select data-key="t3_a">
+          <option value="">— 选择数字 —</option>
+          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+        </select>
+      </td></tr>
+      <tr><td>b) Gabi</td><td>
+        <select data-key="t3_b">
+          <option value="">— 选择数字 —</option>
+          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+        </select>
+      </td></tr>
+      <tr><td>c) Anita</td><td>
+        <select data-key="t3_c">
+          <option value="">— 选择数字 —</option>
+          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+        </select>
+      </td></tr>
+      <tr><td>d) Anna</td><td>
+        <select data-key="t3_d">
+          <option value="">— 选择数字 —</option>
+          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+        </select>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <h2>Aufgabe 4 – Dialog（对话补全）</h2>
+  <div class="tip">主观题，系统不自动判分，交卷后截图发给我</div>
+  <p>A: Guten Tag! Ich heiße Gu Hong.<br>
+     B: <textarea rows="2" placeholder="你的回答"></textarea></p>
+  <p>A: Wie bitte?<br>
+     B: <textarea rows="2" placeholder="你的回答"></textarea></p>
+
+  <h2>Aufgabe 5 – Übersetzen（翻译题）</h2>
+  <div class="tip">请写出下列词语的德语翻译（标点不做严格要求）。</div>
+   <ol id="t5">
+    <li>你好！我叫王兰。<input data-key="t5_1" type="text" placeholder="你好！我叫王兰。"></li>
+    <li>这是什么？<input data-key="t5_2" type="text" placeholder="这是什么？"/></li>
+    <li>A: 谢谢！<input data-key="t5_3" type="text" placeholder="A: 谢谢！">B: 不用谢！<input data-key="t5_4" type="text" placeholder="B: 不用谢！"></li>
+    <li>我的名字是李平。<input data-key="t5_5" type="text" placeholder="我的名字是李平。"></li>
+    <li>这在德语里怎么说？<input data-key="t5_6" type="text" placeholder="这在德语里怎么说？"></li>
+  </ol>
+
+  <h2>Bonus（附加题 ✨）</h2>
+  <p>写出三个你可以在教室里看到的物品（用德语）：</p>
+  <div class="tip">主观题，系统不自动判分，交卷后截图发给我</div>
+  <ol>
+    <li><input type="text"/></li>
+    <li><input type="text"/></li>
+    <li><input type="text"/></li>
+  </ol>
+
+  <div class="actions">
+    <button id="submit">交卷并评分</button>
+    <button id="reveal" class="secondary">显示（客观题）参考答案</button>
+    <span id="score" class="result muted"></span>
+  </div>
+<!--
+  <details style="margin-top:14px">
+    <summary class="small">评分说明 / Answer key（展开查看）</summary>
+    <div class="answer">
+      <p><strong>Teil 1（10分）</strong> 可接受答案举例：</p>
+      <ul>
+        <li>1: Guten Tag / 你好</li>
+        <li>2: Wie heißt du? / 你叫什么名字</li>
+        <li>3: der Name / 名字</li>
+        <li>4: Ich heiße Anna. / 我叫安娜</li>
+        <li>5: das Buch / 书</li>
+        <li>6: Danke! / 谢谢</li>
+        <li>7: Auf Deutsch / 用德语</li>
+        <li>8: Wie bitte? / 请再说一遍 / 什么</li>
+        <li>9: der Herr / 先生</li>
+        <li>10: die Lampe / 灯</li>
+      </ul>
+      <p><strong>Teil 2（8空，8分）</strong>：1) Tag, Name, <em>bin/heiße*</em>（按你题面，这里为“我……Anna”，若用“bin/heiße”均给分，默认<em>heiße</em>）；2) Wer，das；3) heißt，das；4) wie，danke</p>
+      <p><strong>Teil 3（4分）</strong>：a→2 (Hans–Mai)；b→1 (Gabi–Kittmann)；c→3 (Anita–Kant)；d→4 (Anna–Kuhn)</p>
+      <p>Teil 4–5 及 Bonus 为主观题，需教师批改。</p>
+    </div>
+  </details>
+-->
+</main>
+
+<script>
+(function(){
+// ====== 答案库（允许同义） ======
+const T1 = {
+    t1_1: ["你好！","你好"],
+    t1_2: ["你叫什么名字？","你叫什么名字","你叫什麼名字","你叫啥名字","你的名字叫什么","你的名字是什么","你叫啥","你叫什么"],
+    t1_3: ["名字"],
+    t1_4: ["我的名字是安娜。","我叫安娜","我的名字叫安娜","我叫Anna","我的名字是Anna","我的名字叫Anna","我的名字是安娜"],
+    t1_5: ["书","書"],
+    t1_6: ["谢谢！","謝謝","谢谢"],
+    t1_7: ["用德语","德语","德文","用德文","用德语说"],
+    t1_8: ["请再说一遍。","什么？","啥？","請再說一遍","你说啥","你说了啥","你说了什么","你说什么","请再重复一遍","什么","啥","请再说一遍","你再说一遍","再说一遍"],
+    t1_9: ["先生"],
+    t1_10:["灯","燈","台灯"]
+  };
+
+  const T2 = {
+    t2_1a: ["Tag"],
+    t2_1b: ["Name"],
+    // 题面写法可能是“我___ Anna”，给两种写法都判对
+    t2_1c: ["heiße","heisse"],
+    t2_2a: ["Wer"],
+    t2_2b: ["Das"],
+    t2_3a: ["heißt","heisst"],
+    t2_3b: ["Das"],
+    t2_4a: ["bitte"],
+    t2_4b: ["danke"]
+  };
+
+  const T3 = { // a-d → 数字
+    t3_a: "2 Mai", // Hans–Mai
+    t3_b: "1 Kittmann", // Gabi–Kittmann
+    t3_c: "3 Kant", // Anita–Kant
+    t3_d: "4 Kuhn"  // Anna–Kuhn
+  };
+
+const T5 = {
+    t5_1: ["Guten Tag! Ich heiße Wang Lan.","Guten Tag Ich heisse Wang Lan","Guten Tag Ich bin Wang Lan","Guten Tag Mein Name ist Wang Lan","Guten Tag Ich heiße Wang Lan","Guten Tag Ich heisse Wang Lan","Guten Tag Ich bin Wang Lan","Guten Tag Mein Name ist Wang Lan"],
+    t5_2: ["Was ist das?","Was ist das"],
+    t5_3: ["Danke!","Danke","Dankeschön"],
+    t5_4: ["Bitte!","Bitte"],
+    t5_5: ["Mein Name ist Li Ping.","Mein Name ist Li Ping","Ich bin Li Ping","Ich heiße Li Ping","Ich heisse Li Ping"],
+    t5_6: ["Wie heißt das auf Deutsch?","Wie heißt das auf Deutsch","Wie heisst das auf Deutsch","Wie heißt das da auf Deutsch","Wie heisst das da auf Deutsch"]
+  };
+
+  function norm(s){
+    return (s||"")
+      .toLowerCase()
+      .replace(/[!?.。！？、,，·\s]+/g," ")
+      .trim();
+  }
+
+  function decorate(el, ok){
+    el.classList.remove('correct','wrong');
+    el.classList.add(ok? 'correct':'wrong');
+  }
+
+  function note(el){
+    // 把提示元素放到“该输入框的后面”，而不是父节点里
+    let n = el.nextElementSibling;
+    if(!(n && n.classList && n.classList.contains('hint'))){
+      n = document.createElement('div');
+      n.className = 'hint';
+      el.insertAdjacentElement('afterend', n);  // <<< 关键：紧跟在这个输入后面
+    }
+    return n;
+  }
+
+
+  function grade(){
+    let score = 0, total = 0;
+
+    // Teil 1
+    for(const k in T1){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = T1[k].some(ans => norm(el.value) === norm(ans));
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML    = `正确答案：<span class="kbd">${T1[k][0]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    // Teil 2
+    for(const k in T2){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = T2[k].some(ans => norm(ans) === norm(el.value));
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML    = `正确答案：<span class="kbd">${T2[k][0]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    // Teil 3
+    for(const k in T3){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = (el.value === T3[k]);
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML    = `正确答案：<span class="kbd">${T3[k]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    // Teil 5
+    for(const k in T5){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = T5[k].some(ans => norm(el.value) === norm(ans));
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML    = `正确答案：<span class="kbd">${T5[k][0]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    const elScore = document.getElementById('score');
+    elScore.classList.remove('muted');
+    elScore.innerHTML = `得分：<span class="ok">${score}</span> / ${total} （客观题合计）`;
+  }
+
+  function reveal(){
+    for(const k in T1){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T1[k][0];
+    }
+    for(const k in T2){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T2[k][0];
+    }
+    for(const k in T3){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T3[k];
+    }
+    for(const k in T5){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T5[k][0];
+    }
+  }
+
+  document.getElementById('submit').addEventListener('click', grade);
+  document.getElementById('reveal').addEventListener('click', reveal);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>DE Mini-测验</title>
+<style>
+  body {
+    font-family: system-ui, Arial, sans-serif;
+    background: #0b0c10;
+    color: #e6e6e6;
+    margin: 0;
+  }
+  .wrap {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  p.subtitle {
+    color: #aab2c5;
+  }
+  .tests {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 28px;
+  }
+  .card {
+    background: #11141a;
+    border: 1px solid #232938;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  }
+  .card h3 {
+    margin: 0 0 6px;
+  }
+  .meta {
+    color: #aab2c5;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #3b82f6;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .done {
+    color: #7ee787;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>DE 月度测验</h1>
+  <p class="subtitle">点击下方任意月份即可进入测验。</p>
+
+  <div id="test-list" class="tests"></div>
+</div>
+
+<script>
+async function loadTests() {
+  const res = await fetch('monats.json');
+  const tests = await res.json();
+  const list = document.getElementById('test-list');
+  const progress = JSON.parse(localStorage.getItem('de_tests_progress') || "{}");
+
+  list.innerHTML = '';
+  tests.forEach(t => {
+    const done = progress[t.id];
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>${t.title} ${done ? '<span class="done">已完成✅</span>' : ''}</h3>
+      <div class="meta">${t.time || ''}</div>
+      <p>${t.topics?.join(' · ') || ''}</p>
+      <a class="btn" href="${t.path}">开始测验</a>
+    `;
+    list.appendChild(card);
+  });
+}
+
+loadTests();
+</script>
+</body>
+</html>
