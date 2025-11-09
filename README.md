@@ -9,7 +9,7 @@
 ## 🚀 使用方式
 
 📍 在线访问主页：  
-👉 [https://yoooyii.github.io/](https://yoooyii.github.io/)
+👉 [https://yoooyii.github.io/de-tests/](https://yoooyii.github.io/de-tests/)
 
 进入后选择对应月份的测验即可开始。
 
@@ -31,4 +31,5 @@
     "time": "15分钟",
     "topics": ["Begrüßung", "Vorstellung", "Klassenzimmer"]
 },
+
 
