@@ -1,7 +1,7 @@
 # 🌻 DE Monats-Test (Monthly German Mini Tests)
 
-这是一个我自己制作的 **德语月度小测验合集**。  
-每个月会发布一份新的网页测验（Nov Test, Dez Test, Jan Test...），  
+这是一个我自己制作的 **德语小测验合集**。  
+每过几个月会发布一份新的网页测验（Nov Test, Feb Test...），  
 点击即可直接在线作答，无需登录或输入姓名。
 
 ---
@@ -9,7 +9,7 @@
 ## 🚀 使用方式
 
 📍 在线访问主页：  
-👉 [https://yoooyii.github.io/de-tests/](https://yoooyii.github.io/de-tests/)
+👉 [https://yoooyii.github.io/](https://yoooyii.github.io/)
 
 进入后选择对应月份的测验即可开始。
 
@@ -30,6 +30,15 @@
     "path": "tests/2025-11-Nov_Test.html",
     "time": "15分钟",
     "topics": ["Begrüßung", "Vorstellung", "Klassenzimmer"]
-},
+}
+```
+---
 
+## 📌 24.11.2025 更新
+1. 新增：语音听力按钮（Aufgabe 3 & Hörverstehen）
+2. 新增：开始测试按钮（Starten!）
+3. 新增：悬浮计时器
 
+---
+
+### 隔壁有单词练习网页 [https://github.com/yoooyii/vokabel-web](https://github.com/yoooyii/vokabel-web)
