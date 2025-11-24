@@ -5,6 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>德语课堂测验Nov</title>
 <style>
+  /* 悬浮计时器 */
+  .floating-timer{
+      position: fixed;
+      right: 16px;
+      top: 16px;           /* 想要在左边就改成 left:16px; */
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 999;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      display: none;       /* 先隐藏，点“Starten”再出现 */
+    }
+
+  /* 顶部大的 Starten! 按钮 */
+  .start-box{
+    text-align:center;
+    margin-bottom:20px;
+  }
+
+  .start-big{
+    background:#007bff;
+    color:white;
+    padding:12px 28px;
+    font-size:18px;
+    border-radius:10px;
+    border:0;
+    cursor:pointer;
+  }
+
+  .start-big:hover{
+    background:#0066d3;
+  }
+
+  .start-note{
+    margin-top:6px;
+    font-size:14px;
+    color:#333;
+  }
+
+  /* 小喇叭 / 听力按钮 */
+  .audio-btn{
+    padding: 4px 10px;
+    font-size: 14px;
+    border-radius: 999px;
+    border: 1px solid #cfd4dc;
+    background: #f5f5ff;
+    cursor: pointer;
+  }
+  .audio-btn:hover{
+    background:#e1e4ff;
+  }
+
+  .listen-item{
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    background:#fafafa;
+  }
+
   :root{--max:900px;--gap:12px}
   body{font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif;line-height:1.55;margin:0;background:#fafafa;color:#222}
   .page{max-width:var(--max);margin:24px auto;padding:24px;background:#fff;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
@@ -35,10 +96,19 @@
 </head>
 <body>
 <main class="page">
+    <!-- 新增：开始按钮-->
+  <div class="start-box">
+    <button id="startTimer" class="start-big">Starten!</button>
+    <div class="start-note">点击按钮开始计时小测试，点击最下方交卷按钮停止计时</div>
+  </div>
+
   <h1>DE Mini‑Test 1: Guten Tag! &amp; Auf Deutsch, bitte!</h1>
   <div class="meta">
     <span class="tag">Zeit: 15 Minuten</span>
     <span class="tag">Themen: Begrüßung, Vorstellung, Fragen nach Namen, Klassenzimmerwörter</span>
+    
+    <!-- 新增：计时显示 -->
+    <span id="timerDisplay" class="tag">Vergangene Zeit：00:00</span>
   </div>
 
   <h2>Aufgabe 1 – Vokabeltest（词汇测试）</h2>
@@ -83,37 +153,70 @@
     </div>
   </div>
 
-  <h2>Aufgabe 3 – Zuordnen（匹配题）</h2>
-  <div class="tip">请选择每个名字对应的编号（1 Kittmann，2 Mai，3 Kant，4 Kuhn）。</div>
+  <h2>Aufgabe 3 – Zuordnen（匹配题 / 听力）</h2>
+  <div class="tip">
+    现在是听力题：点击每行的小按钮听名字（全名），然后选择对应的编号（1 Kittmann，2 Mai，3 Kant，4 Kuhn）。
+  </div>
   <table id="t3">
-    <thead><tr><th>Vorname（字母）</th><th>Familienname（数字）</th></tr></thead>
+    <thead>
+      <tr>
+        <th>Vorname（字母）</th>
+        <th>Aussprache</th>
+        <th>Familienname（数字）</th>
+      </tr>
+    </thead>
     <tbody>
-      <tr><td>a) Hans</td><td>
-        <select data-key="t3_a">
-          <option value="">— 选择数字 —</option>
-          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
-        </select>
-      </td></tr>
-      <tr><td>b) Gabi</td><td>
-        <select data-key="t3_b">
-          <option value="">— 选择数字 —</option>
-          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
-        </select>
-      </td></tr>
-      <tr><td>c) Anita</td><td>
-        <select data-key="t3_c">
-          <option value="">— 选择数字 —</option>
-          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
-        </select>
-      </td></tr>
-      <tr><td>d) Anna</td><td>
-        <select data-key="t3_d">
-          <option value="">— 选择数字 —</option>
-          <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
-        </select>
-      </td></tr>
+      <tr>
+        <td>a) Hans</td>
+        <td>
+          <button type="button" class="audio-btn" data-say="Hans Mai">🔊</button>
+        </td>
+        <td>
+          <select data-key="t3_a">
+            <option value="">— 选择数字 —</option>
+            <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>b) Gabi</td>
+        <td>
+          <button type="button" class="audio-btn" data-say="Gabi Kittmann">🔊</button>
+        </td>
+        <td>
+          <select data-key="t3_b">
+            <option value="">— 选择数字 —</option>
+            <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>c) Anita</td>
+        <td>
+          <button type="button" class="audio-btn" data-say="Anita Kant">🔊</button>
+        </td>
+        <td>
+          <select data-key="t3_c">
+            <option value="">— 选择数字 —</option>
+            <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>d) Anna</td>
+        <td>
+          <button type="button" class="audio-btn" data-say="Anna Kuhn">🔊</button>
+        </td>
+        <td>
+          <select data-key="t3_d">
+            <option value="">— 选择数字 —</option>
+            <option>1 Kittmann</option><option>2 Mai</option><option>3 Kant</option><option>4 Kuhn</option>
+          </select>
+        </td>
+      </tr>
     </tbody>
   </table>
+
 
   <h2>Aufgabe 4 – Dialog（对话补全）</h2>
   <div class="tip">主观题，系统不自动判分，交卷后截图发给我</div>
@@ -132,43 +235,45 @@
     <li>这在德语里怎么说？<input data-key="t5_6" type="text" placeholder="这在德语里怎么说？"></li>
   </ol>
 
-  <h2>Bonus（附加题 ✨）</h2>
-  <p>写出三个你可以在教室里看到的物品（用德语）：</p>
-  <div class="tip">主观题，系统不自动判分，交卷后截图发给我</div>
-  <ol>
-    <li><input type="text"/></li>
-    <li><input type="text"/></li>
-    <li><input type="text"/></li>
-  </ol>
+  <h2>Aufgabe 6 – Hörverstehen（听力：单词辨音）</h2>
+  <div class="tip">
+    点击 ▶️ 按钮听一个单词，然后从选项中选择你听到的是哪一个单词。（目前都是短元音 / 长元音的简单对比）
+  </div>
+
+  <div id="t6" class="grid2">
+    <div class="listen-item">
+      <p><strong>(1)</strong>
+        <button type="button" class="audio-btn" data-say="Bett">▶️</button>
+        （听一听，然后选择）
+      </p>
+      <select data-key="t6_1">
+        <option value="">— 请选择 —</option>
+        <option value="Bett">Bett</option>
+        <option value="Beet">Beet</option>
+        <option value="Boot">Boot</option>
+      </select>
+    </div>
+
+    <div class="listen-item">
+      <p><strong>(2)</strong>
+        <button type="button" class="audio-btn" data-say="Boot">▶️</button>
+        （听一听，然后选择）
+      </p>
+      <select data-key="t6_2">
+        <option value="">— 请选择 —</option>
+        <option value="Beet">Beet</option>
+        <option value="Boot">Boot</option>
+        <option value="Bett">Bett</option>
+      </select>
+    </div>
+  </div>
+
 
   <div class="actions">
     <button id="submit">交卷并评分</button>
     <button id="reveal" class="secondary">显示（客观题）参考答案</button>
     <span id="score" class="result muted"></span>
   </div>
-<!--
-  <details style="margin-top:14px">
-    <summary class="small">评分说明 / Answer key（展开查看）</summary>
-    <div class="answer">
-      <p><strong>Teil 1（10分）</strong> 可接受答案举例：</p>
-      <ul>
-        <li>1: Guten Tag / 你好</li>
-        <li>2: Wie heißt du? / 你叫什么名字</li>
-        <li>3: der Name / 名字</li>
-        <li>4: Ich heiße Anna. / 我叫安娜</li>
-        <li>5: das Buch / 书</li>
-        <li>6: Danke! / 谢谢</li>
-        <li>7: Auf Deutsch / 用德语</li>
-        <li>8: Wie bitte? / 请再说一遍 / 什么</li>
-        <li>9: der Herr / 先生</li>
-        <li>10: die Lampe / 灯</li>
-      </ul>
-      <p><strong>Teil 2（8空，8分）</strong>：1) Tag, Name, <em>bin/heiße*</em>（按你题面，这里为“我……Anna”，若用“bin/heiße”均给分，默认<em>heiße</em>）；2) Wer，das；3) heißt，das；4) wie，danke</p>
-      <p><strong>Teil 3（4分）</strong>：a→2 (Hans–Mai)；b→1 (Gabi–Kittmann)；c→3 (Anita–Kant)；d→4 (Anna–Kuhn)</p>
-      <p>Teil 4–5 及 Bonus 为主观题，需教师批改。</p>
-    </div>
-  </details>
--->
 </main>
 
 <script>
@@ -216,6 +321,69 @@ const T5 = {
     t5_6: ["Wie heißt das auf Deutsch?","Wie heißt das auf Deutsch","Wie heisst das auf Deutsch","Wie heißt das da auf Deutsch","Wie heisst das da auf Deutsch"]
   };
 
+  const T6 = {
+    t6_1: "Bett",
+    t6_2: "Boot"
+  };
+
+  // ====== 语音朗读：使用浏览器的 SpeechSynthesis ======
+  function speak(text, lang = 'de-DE'){
+    if (!('speechSynthesis' in window)) {
+      alert('Dein Browser unterstützt die Sprachausgabe leider nicht.');
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    u.rate = 0.9;      // 稍微慢一点，适合初学者
+    u.pitch = 1.0;
+    // 保证每次点击只读当前这句
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+
+    // ====== 计时相关变量和函数 ======
+  let startTime = null;
+  let timerId = null;
+
+  function formatTime(seconds){
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function startTimer(){
+    // 防止重复点击后创建多个计时器
+    if (timerId) return;
+
+    startTime = Date.now();
+    const timerEl   = document.getElementById('timerDisplay');   // 顶部的
+    const floatEl   = document.getElementById('floatingTimer');  // 悬浮的
+    const initText  = 'Vergangene Zeit：00:00';
+
+    if (timerEl) {
+      timerEl.textContent = initText;
+    }
+    if (floatEl) {
+      floatEl.textContent = initText;
+      floatEl.style.display = 'block';   // 点“开始”后显示悬浮计时器
+    }
+
+    timerId = setInterval(() => {
+      const diffSec = Math.floor((Date.now() - startTime) / 1000);
+      const text = 'Vergangene Zeit：' + formatTime(diffSec);
+      if (timerEl)   timerEl.textContent   = text;
+      if (floatEl)   floatEl.textContent   = text;
+    }, 1000);
+  }
+
+
+  function stopTimer(){
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+  }
+
   function norm(s){
     return (s||"")
       .toLowerCase()
@@ -238,7 +406,6 @@ const T5 = {
     }
     return n;
   }
-
 
   function grade(){
     let score = 0, total = 0;
@@ -291,9 +458,29 @@ const T5 = {
       if(ok) score += 1;
     }
 
+    // Teil 6 – Hörverstehen（单词辨音）
+    for(const k in T6){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = (el.value === T6[k]);
+      if (el) decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML    = `正确答案：<span class="kbd">${T6[k]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
     const elScore = document.getElementById('score');
     elScore.classList.remove('muted');
-    elScore.innerHTML = `得分：<span class="ok">${score}</span> / ${total} （客观题合计）`;
+
+    let extraTimeText = '';
+    if (startTime) {
+      const diffSec = Math.floor((Date.now() - startTime) / 1000);
+      extraTimeText = `Zeit benutzt：<span class="ok">${formatTime(diffSec)}</span>`;
+      stopTimer(); // 交卷时停止计时
+    }
+
+    elScore.innerHTML = `得分：<span class="ok">${score}</span> / ${total} （${extraTimeText || ''}）`;
   }
 
   function reveal(){
@@ -313,11 +500,34 @@ const T5 = {
       const el = document.querySelector(`[data-key="${k}"]`);
       if(el && !el.value) el.value = T5[k][0];
     }
+    // Teil 6 – Hörverstehen
+    for(const k in T6){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T6[k];
+    }
+
   }
+
+  const startBtn = document.getElementById('startTimer');
+  if (startBtn) {
+    startBtn.addEventListener('click', startTimer);
+  }
+
+  // 语音按钮：给所有 data-say 按钮绑定朗读
+  document.querySelectorAll('[data-say]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-say');
+      if (text) speak(text, 'de-DE');
+    });
+  });
 
   document.getElementById('submit').addEventListener('click', grade);
   document.getElementById('reveal').addEventListener('click', reveal);
 })();
 </script>
+
+  <!-- 悬浮计时器 -->
+  <div id="floatingTimer" class="floating-timer">Vergangene Zeit：00:00</div>
+
 </body>
 </html>
