@@ -5,5 +5,12 @@
     "path": "tests/2025-11-Nov_Test.html",
     "time": "15分钟",
     "topics": ["Begrüßung", "Vorstellung", "Klassenzimmer"]
+  },
+  {
+    "id": "2026-01",
+    "title": "Jan Test · Woher kommst du? & Entschuldigung!",
+    "path": "tests/2026-01-Jan_Test.html",
+    "time": "20分钟",
+    "topics": ["Woher/kommen", "Berufe", "Länder & Städte", "Entschuldigung"]
   }
 ]

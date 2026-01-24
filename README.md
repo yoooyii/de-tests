@@ -41,4 +41,19 @@
 
 ---
 
+## 📌 24.01.2026 更新
+1. 新增一月份的测验
+2. 打开 `monats.json`，在末尾添加一条新记录：
+
+```json
+{
+    "id": "2026-01",
+    "title": "Jan Test · Woher kommst du? & Entschuldigung!",
+    "path": "tests/2026-01-Jan_Test.html",
+    "time": "20分钟",
+    "topics": ["Woher/kommen", "Berufe", "Länder & Städte", "Entschuldigung"]
+}
+```
+
+---
 ### 隔壁有单词练习网页 [https://github.com/yoooyii/vokabel-web](https://github.com/yoooyii/vokabel-web)
