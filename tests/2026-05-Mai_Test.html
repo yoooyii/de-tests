@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>德语课堂测验Mai</title>
+<style>
+  /* 悬浮计时器 */
+  .floating-timer{
+      position: fixed;
+      right: 16px;
+      top: 16px;
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 999;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      display: none;
+    }
+
+  /* 顶部大的 Starten! 按钮 */
+  .start-box{
+    text-align:center;
+    margin-bottom:20px;
+  }
+
+  .start-big{
+    background:#2563eb;
+    color:white;
+    padding:12px 28px;
+    font-size:18px;
+    border-radius:12px;
+    border:0;
+    cursor:pointer;
+  }
+
+  .start-big:hover{
+    background:#0066d3;
+  }
+
+  .start-note{
+    margin-top:6px;
+    font-size:14px;
+    color:#333;
+  }
+
+  /* 听力按钮 */
+  .audio-btn{
+    padding: 4px 10px;
+    font-size: 14px;
+    border-radius: 999px;
+    border: 1px solid #cfd4dc;
+    background: #f5f5ff;
+    cursor: pointer;
+  }
+  .audio-btn:hover{
+    background:#e1e4ff;
+  }
+
+  .listen-item{
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    background:#fafafa;
+  }
+
+  :root{--max:900px;--gap:12px}
+  body{font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif;line-height:1.55;margin:0;background:#fafafa;color:#222}
+  .page{max-width:var(--max);margin:24px auto;padding:24px;background:#fff;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+  h1,h2{margin:0 0 12px}
+  h1{font-size:1.6rem}
+  h2{font-size:1.2rem;padding-top:10px;border-top:1px solid #eee;margin-top:22px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 18px;color:#444;margin:6px 0 14px}
+  .tag{background:#f2f2f6;padding:4px 8px;border-radius:8px}
+  .tip{background:#fff7cc;border:1px solid #e3eb74;padding:10px;border-radius:10px;margin:10px 0;color:#6b5900}
+  ol{padding-left:22px}
+  input[type="text"], select, textarea{width:100%;padding:8px 10px;border:1px solid #cfd4dc;border-radius:8px;font-size:14px}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap)}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{border-bottom:1px solid #eee;padding:10px;text-align:left;vertical-align:top}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  button{padding:10px 14px;border-radius:10px;border:0;background:#111;color:#fff;cursor:pointer}
+  button.secondary{background:#e6e8ec;color:#111}
+  .result{margin-top:10px;font-weight:600}
+  .ok{color:#087443}
+  .bad{color:#b00020}
+  .muted{color:#666}
+  .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:0 6px}
+  .answer{font-family:ui-monospace,monospace;color:#444;background:#f7f7ff;border:1px dashed #cbd5ff;border-radius:8px;padding:8px}
+  .small{font-size:12px;color:#666}
+  .correct{outline:2px solid #34a853}
+  .wrong{outline:2px solid #ea4335}
+  @media (max-width: 720px){.grid2{grid-template-columns:1fr}.page{margin:0;border-radius:0}}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="start-box">
+    <button id="startTimer" class="start-big">Starten!</button>
+    <div class="start-note">点击按钮开始计时小测试，点击最下方交卷按钮停止计时</div>
+  </div>
+
+  <h1>DE Mini‑Test 3: Wer ist wer und kommt woher?</h1>
+  <div class="meta">
+    <span class="tag">Zeit: 25 Minuten</span>
+    <span class="tag">Themen: Wer?/Was?/Woher?, Personen, Berufe, Länder/Städte</span>
+    <span id="timerDisplay" class="tag">Vergangene Zeit：00:00</span>
+    <span class="tag small">提示：客观题会自动判分；Dialog 为主观题，不自动判。</span>
+  </div>
+
+  <h2>Aufgabe 1 – Vokabeltest（词汇测试）</h2>
+  <div class="tip">请写出下列词语的中文意思（标点不做严格要求；同义表达算对）。</div>
+  <ol id="t1">
+    <li>woher = <input data-key="t1_1" type="text" placeholder="答案"/></li>
+    <li>kommen = <input data-key="t1_2" type="text" placeholder="答案"/></li>
+    <li>aus (+D) = <input data-key="t1_3" type="text" placeholder="答案"/></li>
+    <li>sie = <input data-key="t1_4" type="text" placeholder="答案"/></li>
+    <li>er = <input data-key="t1_5" type="text" placeholder="答案"/></li>
+    <li>was = <input data-key="t1_6" type="text" placeholder="答案"/></li>
+    <li>der Lehrer = <input data-key="t1_7" type="text" placeholder="答案"/></li>
+    <li>die Lehrerin = <input data-key="t1_8" type="text" placeholder="答案"/></li>
+    <li>der Schüler = <input data-key="t1_9" type="text" placeholder="答案"/></li>
+    <li>die Schülerin = <input data-key="t1_10" type="text" placeholder="答案"/></li>
+    <li>der Student = <input data-key="t1_11" type="text" placeholder="答案"/></li>
+    <li>die Studentin = <input data-key="t1_12" type="text" placeholder="答案"/></li>
+    <li>die Kamera = <input data-key="t1_13" type="text" placeholder="答案"/></li>
+    <li>das Internet = <input data-key="t1_14" type="text" placeholder="答案"/></li>
+    <li>Frankreich = <input data-key="t1_15" type="text" placeholder="答案"/></li>
+    <li>Österreich = <input data-key="t1_16" type="text" placeholder="答案"/></li>
+  </ol>
+
+  <h2>Aufgabe 2 – Lückentext（完形填空）</h2>
+  <div class="tip">
+    根据课文内容和本课句型补全。词库：
+    <span class="kbd">Sind</span> <span class="kbd">Name</span> <span class="kbd">bin</span>
+    <span class="kbd">geht</span> <span class="kbd">gut</span> <span class="kbd">nicht</span>
+    <span class="kbd">Lehrerin</span> <span class="kbd">Kommen</span> <span class="kbd">Deutschland</span>
+    <span class="kbd">Frankfurt</span> <span class="kbd">Beijing</span> <span class="kbd">Nanjing</span>
+  </div>
+
+  <div id="t2" class="grid2">
+    <div>
+      <p><strong>(1) Dialog: Frau Euler und Herr Ma</strong><br>
+      Frau Euler: Verzeihung. <input data-key="t2_1a" type="text" style="max-width:130px"> Sie Herr Ma?<br>
+      Herr Ma: Ja, mein <input data-key="t2_1b" type="text" style="max-width:130px"> ist Ma Bolin.<br>
+      Frau Euler: Guten Morgen, ich <input data-key="t2_1c" type="text" style="max-width:130px"> Monika Euler.<br>
+      Herr Ma: Guten Tag. Wie <input data-key="t2_1d" type="text" style="max-width:130px"> es Ihnen?<br>
+      Frau Euler: Danke, <input data-key="t2_1e" type="text" style="max-width:130px">.</p>
+    </div>
+    <div>
+      <p><strong>(2) Textverständnis</strong><br>
+      Herr Ma: Sind Sie Studentin?<br>
+      Frau Euler: Nein, ich bin <input data-key="t2_2a" type="text" style="max-width:130px"> Studentin, ich bin <input data-key="t2_2b" type="text" style="max-width:130px">.<br>
+      Herr Ma: <input data-key="t2_2c" type="text" style="max-width:130px"> Sie aus <input data-key="t2_2d" type="text" style="max-width:130px">?<br>
+      Frau Euler: Ja, aus <input data-key="t2_2e" type="text" style="max-width:130px">. Und Sie?<br>
+      Herr Ma: Ich bin aus <input data-key="t2_2f" type="text" style="max-width:130px">.</p>
+    </div>
+    <div>
+      <p><strong>(3) Kurzer Text</strong><br>
+      Das ist Wang Lan. Sie ist Studentin. Sie kommt aus China, aus <input data-key="t2_3a" type="text" style="max-width:150px">.</p>
+    </div>
+  </div>
+
+  <h2>Aufgabe 3 – Zuordnen（匹配题 / 听力）</h2>
+  <div class="tip">
+    点击🔊听一段人物介绍，然后选择这个人来自哪里。注意：听力中会出现国家、城市和职业。
+  </div>
+
+  <table id="t3">
+    <thead>
+      <tr>
+        <th>Person</th>
+        <th>Hören</th>
+        <th>Woher?（选择）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>a) Frau Euler</td>
+        <td><button type="button" class="audio-btn" data-say="Das ist Frau Euler. Sie ist Lehrerin. Sie kommt aus Deutschland, aus Frankfurt.">🔊</button></td>
+        <td>
+          <select data-key="t3_a">
+            <option value="">— 选择 —</option>
+            <option>Frankfurt</option><option>Köln</option><option>Beijing</option><option>Nanjing</option><option>Shanghai</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>b) Herr Ma</td>
+        <td><button type="button" class="audio-btn" data-say="Das ist Herr Ma. Er ist Lehrer. Er ist aus China, aus Beijing.">🔊</button></td>
+        <td>
+          <select data-key="t3_b">
+            <option value="">— 选择 —</option>
+            <option>Frankfurt</option><option>Köln</option><option>Beijing</option><option>Nanjing</option><option>Shanghai</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>c) Jutta Meier</td>
+        <td><button type="button" class="audio-btn" data-say="Das ist Jutta Meier. Sie ist Schülerin. Sie kommt aus Deutschland. Sie ist aus Köln.">🔊</button></td>
+        <td>
+          <select data-key="t3_c">
+            <option value="">— 选择 —</option>
+            <option>Frankfurt</option><option>Köln</option><option>Beijing</option><option>Nanjing</option><option>Shanghai</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>d) Wang Lan</td>
+        <td><button type="button" class="audio-btn" data-say="Das ist Wang Lan. Sie ist Studentin. Sie kommt aus China, aus Nanjing.">🔊</button></td>
+        <td>
+          <select data-key="t3_d">
+            <option value="">— 选择 —</option>
+            <option>Frankfurt</option><option>Köln</option><option>Beijing</option><option>Nanjing</option><option>Shanghai</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Aufgabe 4 – Dialog（对话补全）</h2>
+  <div class="tip">主观题，系统不自动判分。交卷后截图发给我。要求：用本课句型回答。</div>
+  <p><strong>场景：</strong>你第一次见到一位老师，需要问候、确认身份、问来自哪里，并简单介绍自己。</p>
+  <p>A: Guten Morgen! Sind Sie Frau Euler?<br>B: <textarea data-key="subj_1" rows="2" placeholder="你的回答（德语）"></textarea></p>
+  <p>A: Woher kommen Sie?<br>B: <textarea data-key="subj_2" rows="2" placeholder="你的回答（德语）"></textarea></p>
+  <p>A: Was sind Sie?<br>B: <textarea data-key="subj_3" rows="2" placeholder="你的回答（德语）"></textarea></p>
+
+  <h2>Aufgabe 5 – Übersetzen（翻译题）</h2>
+  <div class="tip">写出德语（允许多种正确表达；大小写和标点不严格）。</div>
+  <ol id="t5">
+    <li>这是谁？<input data-key="t5_1" type="text" placeholder="德语"/></li>
+    <li>她来自德国。<input data-key="t5_2" type="text" placeholder="德语"/></li>
+    <li>马先生是老师。<input data-key="t5_3" type="text" placeholder="德语"/></li>
+    <li>她不是大学生，她是女老师。<input data-key="t5_4" type="text" placeholder="德语"/></li>
+    <li>您从哪里来？<input data-key="t5_5" type="text" placeholder="德语"/></li>
+    <li>不好意思，您是 Euler 女士吗？<input data-key="t5_6" type="text" placeholder="德语"/></li>
+    <li>这是照相机。<input data-key="t5_7" type="text" placeholder="德语"/></li>
+    <li>我来自中国，来自上海。<input data-key="t5_8" type="text" placeholder="德语"/></li>
+  </ol>
+
+  <h2>Aufgabe 6 – Hörverstehen（听力：单词辨音）</h2>
+  <div class="tip">点击▶️听一个词，然后选择你听到的是哪个。内容来自本课职业、物品、国家/城市词汇。</div>
+
+  <div id="t6" class="grid2">
+    <div class="listen-item">
+      <p><strong>(1)</strong> <button type="button" class="audio-btn" data-say="Lehrerin">▶️</button></p>
+      <select data-key="t6_1">
+        <option value="">— 请选择 —</option>
+        <option value="Lehrer">Lehrer</option>
+        <option value="Lehrerin">Lehrerin</option>
+        <option value="Schülerin">Schülerin</option>
+      </select>
+    </div>
+
+    <div class="listen-item">
+      <p><strong>(2)</strong> <button type="button" class="audio-btn" data-say="Studentin">▶️</button></p>
+      <select data-key="t6_2">
+        <option value="">— 请选择 —</option>
+        <option value="Student">Student</option>
+        <option value="Studentin">Studentin</option>
+        <option value="Schüler">Schüler</option>
+      </select>
+    </div>
+
+    <div class="listen-item">
+      <p><strong>(3)</strong> <button type="button" class="audio-btn" data-say="Kamera">▶️</button></p>
+      <select data-key="t6_3">
+        <option value="">— 请选择 —</option>
+        <option value="Kamera">Kamera</option>
+        <option value="CD">CD</option>
+        <option value="Internet">Internet</option>
+      </select>
+    </div>
+
+    <div class="listen-item">
+      <p><strong>(4)</strong> <button type="button" class="audio-btn" data-say="Frankreich">▶️</button></p>
+      <select data-key="t6_4">
+        <option value="">— 请选择 —</option>
+        <option value="Frankfurt">Frankfurt</option>
+        <option value="Frankreich">Frankreich</option>
+        <option value="Frankreich">Frankreich</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="submit">交卷并评分</button>
+    <button id="reveal" class="secondary">显示（客观题）参考答案</button>
+    <span id="score" class="result muted"></span>
+  </div>
+</main>
+
+<script>
+(function(){
+  const TEST_ID = "2026-05"; // 用于首页“已完成✅”标记
+  const PROGRESS_KEY = "de_tests_progress";
+
+  // ====== 答案库（允许同义） ======
+  const T1 = {
+    t1_1: ["从哪里","从哪儿","从何处","哪里来","哪儿来"],
+    t1_2: ["来","来到"],
+    t1_3: ["从……来","从...来","来自","从"],
+    t1_4: ["她"],
+    t1_5: ["他"],
+    t1_6: ["什么","啥"],
+    t1_7: ["老师","教师","男老师","男教师"],
+    t1_8: ["女老师","女教师","老师","教师"],
+    t1_9: ["学生","中小学生","中学生","小学生","男学生"],
+    t1_10:["女学生","女中学生","女小学生","女中小学生"],
+    t1_11:["大学生","男大学生"],
+    t1_12:["女大学生","大学生","女学生"],
+    t1_13:["照相机","相机"],
+    t1_14:["互联网","网络","因特网"],
+    t1_15:["法国"],
+    t1_16:["奥地利"]
+  };
+
+  const T2 = {
+    t2_1a: ["Sind"],
+    t2_1b: ["Name"],
+    t2_1c: ["bin"],
+    t2_1d: ["geht"],
+    t2_1e: ["gut"],
+    t2_2a: ["nicht"],
+    t2_2b: ["Lehrerin"],
+    t2_2c: ["Kommen"],
+    t2_2d: ["Deutschland"],
+    t2_2e: ["Frankfurt"],
+    t2_2f: ["Beijing","Peking"],
+    t2_3a: ["Nanjing"]
+  };
+
+  const T3 = {
+    t3_a: "Frankfurt",
+    t3_b: "Beijing",
+    t3_c: "Köln",
+    t3_d: "Nanjing"
+  };
+
+  const T5 = {
+    t5_1: [
+      "Wer ist das?","Wer ist das"
+    ],
+    t5_2: [
+      "Sie kommt aus Deutschland.","Sie kommt aus Deutschland",
+      "Sie ist aus Deutschland.","Sie ist aus Deutschland"
+    ],
+    t5_3: [
+      "Herr Ma ist Lehrer.","Herr Ma ist Lehrer",
+      "Herr Ma ist ein Lehrer.","Herr Ma ist ein Lehrer"
+    ],
+    t5_4: [
+      "Sie ist nicht Studentin, sie ist Lehrerin.","Sie ist nicht Studentin sie ist Lehrerin",
+      "Sie ist keine Studentin, sie ist Lehrerin.","Sie ist keine Studentin sie ist Lehrerin",
+      "Sie ist nicht Studentin. Sie ist Lehrerin.","Sie ist keine Studentin. Sie ist Lehrerin."
+    ],
+    t5_5: [
+      "Woher kommen Sie?","Woher kommen Sie"
+    ],
+    t5_6: [
+      "Verzeihung! Sind Sie Frau Euler?","Verzeihung Sind Sie Frau Euler",
+      "Entschuldigung! Sind Sie Frau Euler?","Entschuldigung Sind Sie Frau Euler",
+      "Entschuldigung, sind Sie Frau Euler?","Verzeihung, sind Sie Frau Euler?"
+    ],
+    t5_7: [
+      "Das ist eine Kamera.","Das ist eine Kamera",
+      "Das ist Kamera.","Das ist Kamera"
+    ],
+    t5_8: [
+      "Ich komme aus China, aus Shanghai.","Ich komme aus China aus Shanghai",
+      "Ich bin aus China, aus Shanghai.","Ich bin aus China aus Shanghai",
+      "Ich komme aus Shanghai.","Ich bin aus Shanghai."
+    ]
+  };
+
+  const T6 = {
+    t6_1: "Lehrerin",
+    t6_2: "Studentin",
+    t6_3: "Kamera",
+    t6_4: "Frankreich"
+  };
+
+  // ====== 语音朗读：浏览器 SpeechSynthesis ======
+  function speak(text, lang = 'de-DE'){
+    if (!('speechSynthesis' in window)) {
+      alert('Dein Browser unterstützt die Sprachausgabe leider nicht.');
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    u.rate = 0.9;
+    u.pitch = 1.0;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+
+  // ====== 计时 ======
+  let startTime = null;
+  let timerId = null;
+
+  function formatTime(seconds){
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function startTimer(){
+    if (timerId) return;
+    startTime = Date.now();
+    const timerEl = document.getElementById('timerDisplay');
+    const floatEl = document.getElementById('floatingTimer');
+    const initText = 'Vergangene Zeit：00:00';
+
+    if (timerEl) timerEl.textContent = initText;
+    if (floatEl) { floatEl.textContent = initText; floatEl.style.display = 'block'; }
+
+    timerId = setInterval(() => {
+      const diffSec = Math.floor((Date.now() - startTime) / 1000);
+      const text = 'Vergangene Zeit：' + formatTime(diffSec);
+      if (timerEl) timerEl.textContent = text;
+      if (floatEl) floatEl.textContent = text;
+    }, 1000);
+  }
+
+  function stopTimer(){
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+  }
+
+  function norm(s){
+    return (s||"")
+      .toLowerCase()
+      .replace(/ß/g,"ss")
+      .replace(/[!?.。！？、,，;；:：·'"“”‘’（）()\-]+/g," ")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function decorate(el, ok){
+    if(!el) return;
+    el.classList.remove('correct','wrong');
+    el.classList.add(ok ? 'correct' : 'wrong');
+  }
+
+  function note(el){
+    let n = el.nextElementSibling;
+    if(!(n && n.classList && n.classList.contains('hint'))){
+      n = document.createElement('div');
+      n.className = 'hint';
+      el.insertAdjacentElement('afterend', n);
+    }
+    return n;
+  }
+
+  function saveProgress(usedSeconds){
+    const progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
+    progress[TEST_ID] = {
+      done: true,
+      time_used_sec: usedSeconds || null,
+      finished_at: new Date().toISOString()
+    };
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+  }
+
+  function grade(){
+    let score = 0, total = 0;
+
+    // Teil 1
+    for(const k in T1){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = T1[k].some(ans => norm(el.value) === norm(ans));
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML = `正确答案：<span class="kbd">${T1[k][0]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    // Teil 2
+    for(const k in T2){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = T2[k].some(ans => norm(el.value) === norm(ans));
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML = `正确答案：<span class="kbd">${T2[k][0]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    // Teil 3
+    for(const k in T3){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = (el.value === T3[k]);
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML = `正确答案：<span class="kbd">${T3[k]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    // Teil 5
+    for(const k in T5){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = T5[k].some(ans => norm(el.value) === norm(ans));
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML = `正确答案：<span class="kbd">${T5[k][0]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    // Teil 6
+    for(const k in T6){
+      total += 1;
+      const el = document.querySelector(`[data-key="${k}"]`);
+      const ok = (el.value === T6[k]);
+      decorate(el, ok);
+      const n = note(el);
+      if(ok){ n.textContent = "✓ 正确"; n.className = "hint ok"; }
+      else  { n.innerHTML = `正确答案：<span class="kbd">${T6[k]}</span>`; n.className = "hint bad"; }
+      if(ok) score += 1;
+    }
+
+    const elScore = document.getElementById('score');
+    elScore.classList.remove('muted');
+
+    let usedSec = null;
+    if (startTime) {
+      usedSec = Math.floor((Date.now() - startTime) / 1000);
+      stopTimer();
+    }
+
+    saveProgress(usedSec);
+
+    const timeText = usedSec !== null ? `Zeit benutzt：<span class="ok">${formatTime(usedSec)}</span>` : '';
+    elScore.innerHTML = `得分：<span class="ok">${score}</span> / ${total} （${timeText}）<span class="small">（已记录完成✅）</span>`;
+  }
+
+  function reveal(){
+    for(const k in T1){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T1[k][0];
+    }
+    for(const k in T2){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T2[k][0];
+    }
+    for(const k in T3){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T3[k];
+    }
+    for(const k in T5){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T5[k][0];
+    }
+    for(const k in T6){
+      const el = document.querySelector(`[data-key="${k}"]`);
+      if(el && !el.value) el.value = T6[k];
+    }
+  }
+
+  // 绑定按钮
+  const startBtn = document.getElementById('startTimer');
+  if (startBtn) startBtn.addEventListener('click', startTimer);
+
+  document.querySelectorAll('[data-say]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-say');
+      if (text) speak(text, 'de-DE');
+    });
+  });
+
+  document.getElementById('submit').addEventListener('click', grade);
+  document.getElementById('reveal').addEventListener('click', reveal);
+})();
+</script>
+
+<div id="floatingTimer" class="floating-timer">Vergangene Zeit：00:00</div>
+</body>
+</html>
