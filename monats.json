@@ -12,5 +12,12 @@
     "path": "tests/2026-01-Jan_Test.html",
     "time": "20分钟",
     "topics": ["Woher/kommen", "Berufe", "Länder & Städte", "Entschuldigung"]
+  },
+  {
+    "id": "2026-05",
+    "title": "Mai Test · Wer ist wer und kommt woher?",
+    "path": "tests/2026-05-Mai_Test.html",
+    "time": "25分钟",
+    "topics": ["Wer?/Was?/Woher?", "Personen", "Berufe", "Länder & Städte"]
   }
 ]
